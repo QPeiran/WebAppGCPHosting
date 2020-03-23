@@ -5,6 +5,18 @@ const app = express();
 const port = process.env.PORT || 8080;
 const path = require('path');
 const fetch = require("node-fetch");
+const admin = require('firebase-admin');
+
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://scanning-database.firebaseio.com"
+});
+
 
 app.use('/', express.static('frontend-angular/dist/frontend-angular')); ///middle-ware
 
@@ -28,6 +40,11 @@ app.get('/text', async (req,res) => {
   //const searchString = `q=${req.query.q}`;
   //console.log(searchString.toString());
 });
+
+app.get('/firebase', async (req,res) => {
+  //get data from my firebase
+  fireAPI = '';
+})
 
 app.listen(port, () => {
   console.log(`Server is running at PORT ${port}`);
