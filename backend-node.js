@@ -7,16 +7,15 @@ const path = require('path');
 const fetch = require("node-fetch");
 const admin = require('firebase-admin');
 
+const serviceAccount = require("./scanning-database-firebase-credentials.json");
 
-var admin = require("firebase-admin");
-
-var serviceAccount = require("path/to/serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://scanning-database.firebaseio.com"
 });
 
+const db = admin.firestore();
 
 app.use('/', express.static('frontend-angular/dist/frontend-angular')); ///middle-ware
 
@@ -36,15 +35,46 @@ app.get('/text', async (req,res) => {
                               //   console.log(json);
                               // })
   console.log("Response is : " + response);
+  ////////set two instances in firebase
+  // let docRef = db.collection('users').doc('alovelace');
+
+  // let setAda = docRef.set({
+  //   first: 'Ada',
+  //   last: 'Lovelace',
+  //   born: 1815
+  // });
+
+  // let aTuringRef = db.collection('users').doc('aturing');
+
+  // let setAlan = aTuringRef.set({
+  //   'first': 'Alan',
+  //   'middle': 'Mathison',
+  //   'last': 'Turing',
+  //   'born': 1912
+  // });
+  //////////////////////////////////////////////////////
+  //res.status(200).send(setAda+setAlan);
   res.status(200).send(response);
   //const searchString = `q=${req.query.q}`;
   //console.log(searchString.toString());
 });
 
-app.get('/firebase', async (req,res) => {
+app.get('/firestore', async (req,res) => {
   //get data from my firebase
-  fireAPI = '';
+  db.collection('users').get()
+  .then((snapshot) => {
+    snapshot.forEach((doc) => {
+      console.log(doc.id, '=>', doc.data()); ///automatically update the data every about 2 mins
+      console.log(Date.now().toString());      
+    });
+  })
+  .catch((err) => {
+    console.log('Error getting documents', err);
+  });
+
 })
+
+
 
 app.listen(port, () => {
   console.log(`Server is running at PORT ${port}`);
