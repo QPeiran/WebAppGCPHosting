@@ -82,7 +82,7 @@ app.listen(port, () => {
 
 module.exports = app;
 
-////////////////////////////CloudSQL for MySQL part//////////////////////////
+////////////////////////////CloudSQL for MySQL part -- deprecated -- we are collecting RAW data better to be in the format of NoSQL//////////////////////////
 // var mysql = require('mysql');
 // var bodyParser = require('body-parser');
 
