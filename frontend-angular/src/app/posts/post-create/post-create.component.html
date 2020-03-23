@@ -1,0 +1,31 @@
+<h2>Posts create from post-create.component.html</h2>
+
+<!-- property binding -- name the DOM element then operate around it-->
+<textarea matInput rows="6" [value] = "lianggePost" #inputText></textarea>
+<hr>
+<button (click) = "onAddPost(inputText)"> Save Data</button> <!--event binding-->
+<p>{{yigePost}}</p> <!--string interpolation-->
+
+<mat-card>
+  <mat-form-field>
+    <textarea matInput rows = "1" type ="text" [(ngModel)] = "enterTitle"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <!--two ways binding ngModel-->
+    <textarea matInput rows = "10" [(ngModel)] = "enterContent"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color = "accent"
+  (click) = "onAddNewPost()"> Save Data</button>
+</mat-card>
+
+<hr>
+
+<hr>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+  <input name="title" ngModel required minlength="1" #titles = "ngModel">
+  <p *ngIf = "titles.invalid"> Please Enter a title bigger than 1</p>
+  <hr>
+  <input name="content" ngModel required minlength="5" #contents = "ngModel">
+  <p *ngIf = "contents.invalid"> Please Enter a title bigger than 5</p>
+  <button>Submit</button>
+</form>

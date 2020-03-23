@@ -1,0 +1,23 @@
+<mat-accordion multi = "true" *ngIf = "posts1.length > 0">
+  <mat-expansion-panel *ngFor = "let post1 of posts1">
+    <mat-expansion-panel-header>
+      <p>{{post1.title}}</p>
+    </mat-expansion-panel-header>
+      <p>{{post1.content}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="mat-body-strong myStyle" *ngIf = "posts1.length  == 0">No post yet</p>
+
+<mat-accordion multi = "true" *ngIf = "posts2.length > 0">
+  <mat-expansion-panel *ngFor = "let post2 of posts2; let i = index">
+    <mat-expansion-panel-header>
+      <p>{{post2.title}}</p>
+    </mat-expansion-panel-header>
+      <p>{{post2.content}}</p>
+      <mat-action-row>
+        <button mat-raised-button color = "primary" (click) = "FetchPost(post2, i)"> Fetch & Edit </button>
+        <button mat-raised-button color = "warn" (click) = "DeletePost(post2, i)"> Delete </button>
+      </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="mat-body-strong myStyle" *ngIf = "posts2.length  == 0">No post yet</p>
